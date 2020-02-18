@@ -1,0 +1,55 @@
+---
+title: "Fiona Data"
+author: "Jim Wright"
+date: "2/12/2020"
+output: html_document
+toc: true
+toc_float: true 
+theme: united 
+highlight: zenburn 
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE,
+                      dev.args = list(bg="transparent"))
+
+library(tidyverse)
+library(rio)
+library(here)
+library(colorblindr)
+library(gghighlight)
+library(forcats)
+library(ggrepel)
+
+
+diaper <- import(here("data", "fiona_diaper.sav"),
+               setclass = "tbl_df") %>% 
+               characterize() %>% 
+               janitor::clean_names() 
+
+
+feed <- import(here("data", "fiona_feed.sav"),
+               setclass = "tbl_df") %>% 
+               characterize() %>% 
+               janitor::clean_names() 
+
+
+
+```
+
+
+```{r data explore, include=TRUE}
+head(diaper)
+
+head(feed)
+
+
+mean_feed_duration <- feed %>% 
+  summarize(mean(feeding_duration))
+
+feed %>% 
+  count(feeding)
+  
+```
