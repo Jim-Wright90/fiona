@@ -22,6 +22,9 @@ library(colorblindr)
 library(gghighlight)
 library(forcats)
 library(ggrepel)
+library(distill)
+library(knitr)
+library(kableExtra)
 
 
 diaper <- import(here("data", "fiona_diaper.sav"),
@@ -49,7 +52,56 @@ head(feed)
 mean_feed_duration <- feed %>% 
   summarize(mean(feeding_duration))
 
+mean_feed_duration
+
+mean_daily_feed <- feed %>% 
+  summarize(mean(feeding))
+
+mean_daily_feed
+
 feed %>% 
   count(feeding)
+
+
+mean_daily_change <- diaper %>% 
+  summarize(mean(diaper_number))
+
+mean_daily_change
   
+```
+
+
+```{r kable tables, include=TRUE}
+head(feed)
+head(diaper)
+
+feed_table_1 <- feed %>% 
+  group_by(date, feeding, feeding_time, feeding_duration, source)
+
+knitr::kable(feed_table_1, 
+             caption = "Fiona Feeding Data",
+             col.names = c("Date",
+                           "Day Number",
+                           "Feeding Number",
+                           "Feeding Time",
+                           "Feeding Duration",
+                           "Source")) %>% 
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
+   column_spec(1:6, bold = T, border_right = T)
+
+
+diaper_table_1 <- diaper %>% 
+  group_by(date, day, diaper_number, diaper_type, change_time)
+
+knitr::kable(diaper_table_1, 
+             caption = "Fiona Diaper Data",
+             col.names = c("Date",
+                           "Day Number",
+                           "Diaper Number",
+                           "Diaper Type",
+                           "Change Time")) %>% 
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
+   column_spec(1:5, bold = T, border_right = T)
+
+
 ```
