@@ -72,8 +72,6 @@ mean_daily_change
 
 
 ```{r kable tables, include=TRUE}
-head(feed)
-head(diaper)
 
 feed_table_1 <- feed %>% 
   group_by(date, feeding, feeding_time, feeding_duration, source)
@@ -86,8 +84,11 @@ knitr::kable(feed_table_1,
                            "Feeding Time",
                            "Feeding Duration",
                            "Source")) %>% 
-   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
-   column_spec(1:6, bold = T, border_right = T)
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                 fixed_thead = TRUE) %>% 
+   column_spec(1:6, bold = T, border_right = T, color = "black") %>% 
+   row_spec(0, color = "black") 
+ 
 
 
 diaper_table_1 <- diaper %>% 
@@ -100,8 +101,10 @@ knitr::kable(diaper_table_1,
                            "Diaper Number",
                            "Diaper Type",
                            "Change Time")) %>% 
-   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive")) %>% 
-   column_spec(1:5, bold = T, border_right = T)
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"),
+                 fixed_thead = TRUE) %>% 
+   column_spec(1:5, bold = T, border_right = T, color = "black") %>% 
+   row_spec(0, color = "black") 
 
 
 ```
