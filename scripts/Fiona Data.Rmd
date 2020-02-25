@@ -25,6 +25,7 @@ library(ggrepel)
 library(distill)
 library(knitr)
 library(kableExtra)
+usethis::git_vaccinate()
 
 
 diaper <- import(here("data", "fiona_diaper.sav"),
